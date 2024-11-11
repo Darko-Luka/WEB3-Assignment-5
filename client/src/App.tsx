@@ -2,8 +2,8 @@ import Lobby from "./views/Lobby";
 
 function App() {
   return (
-    <div className="max-w-screen-2xl mx-auto bg-slate-800 h-screen">
-      <div className="bg-white">
+    <div className="w-full bg-slate-800 h-screen">
+      <div className="bg-white max-w-screen-lg mx-auto">
         <Lobby />
       </div>
     </div>
