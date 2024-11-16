@@ -7,7 +7,6 @@ const headers = {
   "Content-Type": "application/json",
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-object-type
 async function post(url: string, body: {} = {}): Promise<any> {
   const response: Response = await fetch(url, {
     method: "POST",
@@ -45,7 +44,6 @@ export async function new_game(
   });
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function perform_action(game: IndexedYahtzee, action: any) {
   return post(`http://localhost:8080/games/${game.id}/actions`, action);
 }

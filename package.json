@@ -1,7 +1,16 @@
 {
   "name": "yahtzee",
   "version": "1.0.0",
-  "workspaces": ["client", "server", "pubsub"],
+  "workspaces": [
+    "client",
+    "server",
+    "pubsub"
+  ],
   "author": "Ole I Hougaard",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.3.0",
+    "react-redux": "^9.1.2",
+    "redux-thunk": "^3.1.0"
+  }
 }
