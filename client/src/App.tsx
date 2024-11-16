@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
-import Login from "./views/Login";
-import Game from "./views/Game";
+import Login from "./Views/Login";
+import Game from "./Views/Game";
+import ScoreCard from "./components/ScoreCard";
 
 function App() {
   return (
@@ -10,6 +11,8 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/game" element={<Game />} />
         </Routes>
+
+        <ScoreCard />
       </div>
     </div>
   );
