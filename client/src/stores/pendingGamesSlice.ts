@@ -1,10 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-
-export interface IndexedYahtzeeSpecs {
-  id: number;
-  [key: string]: any;
-}
+import { IndexedYahtzeeSpecs } from "@/model/game";
 
 interface PendingGamesState {
   gameList: IndexedYahtzeeSpecs[];
@@ -18,27 +14,27 @@ const pendingGamesSlice = createSlice({
   name: "pendingGames",
   initialState,
   reducers: {
-    updateGame: (state, action: PayloadAction<IndexedYahtzeeSpecs>) => {
+    updatePendingGame: (state, action: PayloadAction<IndexedYahtzeeSpecs>) => {
       const index = state.gameList.findIndex(
         (game) => game.id === action.payload.id
       );
       if (index > -1) {
-        state.gameList[index] = action.payload;
+        state.gameList[index] = { ...action.payload };
       }
     },
 
-    upsertGame: (state, action: PayloadAction<IndexedYahtzeeSpecs>) => {
+    upsertPendingGame: (state, action: PayloadAction<IndexedYahtzeeSpecs>) => {
       const index = state.gameList.findIndex(
         (game) => game.id === action.payload.id
       );
       if (index > -1) {
-        state.gameList[index] = action.payload;
+        state.gameList[index] = { ...action.payload };
       } else {
-        state.gameList.push(action.payload);
+        state.gameList.push({ ...action.payload });
       }
     },
 
-    removeGame: (state, action: PayloadAction<number>) => {
+    removePendingGame: (state, action: PayloadAction<number>) => {
       state.gameList = state.gameList.filter(
         (game) => game.id !== action.payload
       );
@@ -46,7 +42,11 @@ const pendingGamesSlice = createSlice({
   },
 });
 
-export const { updateGame, upsertGame, removeGame } = pendingGamesSlice.actions;
+export const {
+  updatePendingGame,
+  upsertPendingGame,
+  removePendingGame,
+} = pendingGamesSlice.actions;
 export default pendingGamesSlice.reducer;
 
 export const selectGameById = (state: RootState, id: number) =>

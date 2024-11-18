@@ -1,10 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import * as api from "../model/api";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "@/stores/store";
 const Lobby = () => {
-  const player = "et";
+  const selectPlayer = (state: RootState) => state.player.player;
 
+  const player = useSelector(selectPlayer);
+
+  const navigate = useNavigate();
   const [numberOfPlayers, setNumberOfpLayers] = useState(2);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,7 +24,14 @@ const Lobby = () => {
     setNumberOfpLayers(int);
   };
 
-  const new_game = (player: string) => {};
+  const new_game = async (player: string) => {
+    const pending_game = await api.new_game(numberOfPlayers, player);
+    setTimeout(() => navigate(`/pending/${pending_game.id}`), 100);
+  };
+
+  useEffect(() => {
+    if (player === undefined) navigate("/login");
+  });
 
   return (
     <div className="max-w-screen-md space-y-6">
@@ -26,7 +39,7 @@ const Lobby = () => {
       <main className="space-x-4 flex items-center">
         {player && (
           <>
-            <span className="min-w-fit">Number of players: </span>{" "}
+            <span className="min-w-fit">Number of players: </span>
             <Input
               min="1"
               type="number"
