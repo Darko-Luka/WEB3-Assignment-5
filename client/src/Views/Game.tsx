@@ -56,15 +56,28 @@ function Game() {
                 </div>
               </>
             ) : (
-              <table>
-                <thead>
-                  <tr>
-                    <td>Player</td>
-                    <td>Score</td>
-                  </tr>
-                </thead>
-                <tbody>neka sad poslje</tbody>
-              </table>
+              <div className="scoreboard">
+                <table>
+                  <thead>
+                    <tr>
+                      <td>Player</td>
+                      <td>Score</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {standings().map((row) => {
+                      return (
+                        <tr
+                          className={row[0] == player ? "current" : undefined}
+                        >
+                          <td>{row[0]}</td>
+                          <td>{row[1]}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
             )}
           </div>
         </div>

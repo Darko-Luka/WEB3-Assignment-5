@@ -72,3 +72,27 @@
 .table-class td {
   @apply border border-slate-600 p-1;
 }
+
+.current {
+    font-weight: bold;
+    background-color: firebrick;
+    color: lavenderblush;
+  }
+
+    .scoreboard {
+    display: inline-block;
+    margin: .3rem 1rem;
+  }
+  .scoreboard thead {
+    font-weight: bold;
+    font-size: large;
+  }
+  .scoreboard > table {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+  .scoreboard td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: .2rem
+  }

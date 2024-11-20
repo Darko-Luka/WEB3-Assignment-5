@@ -20,10 +20,8 @@ const ongoingGamesSlice = createSlice({
         const index = state.gameList.findIndex(
           (game) => game.id === action.payload.id
         );
-        console.log(index);
         if (index > -1) {
           state.gameList[index] = deepClone(action.payload);
-          console.log(state.gameList[index]);
         }
       } else {
         state.gameList.push(deepClone(action.payload));
