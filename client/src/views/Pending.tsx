@@ -37,13 +37,8 @@ const Pending = () => {
   }, [selectedPendingGame, player, canJoin]);
 
   useEffect(() => {
-    console.log(selectedOngoingGame);
-    console.log(selectedPendingGame);
-    console.log("Fico");
     if (!selectedPendingGame) {
-      console.log("+");
       if (selectedOngoingGame) {
-        console.log("Kata");
         navigate(`/game/${gameId}`);
       } else {
         navigate("/");
@@ -79,7 +74,7 @@ const Pending = () => {
             (selectedPendingGame?.players.length ?? 0)}
         </span>
       </p>
-      {canJoin() && <Button onClick={join}>Power joint</Button>}
+      {canJoin() && <Button onClick={join}>join</Button>}
     </div>
   );
 };

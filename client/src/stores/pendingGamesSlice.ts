@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import { IndexedYahtzeeSpecs } from "@/model/game";
+import { deepClone } from "@/lib/utils";
 
 interface PendingGamesState {
   gameList: IndexedYahtzeeSpecs[];
@@ -19,7 +20,7 @@ const pendingGamesSlice = createSlice({
         (game) => game.id === action.payload.id
       );
       if (index > -1) {
-        state.gameList[index] = { ...action.payload };
+        state.gameList[index] = deepClone(action.payload);
       }
     },
 
@@ -28,9 +29,9 @@ const pendingGamesSlice = createSlice({
         (game) => game.id === action.payload.id
       );
       if (index > -1) {
-        state.gameList[index] = { ...action.payload };
+        state.gameList[index] = deepClone(action.payload);
       } else {
-        state.gameList.push({ ...action.payload });
+        state.gameList.push(deepClone(action.payload));
       }
     },
 

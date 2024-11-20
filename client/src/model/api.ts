@@ -1,13 +1,13 @@
-import type { DieValue } from "models/src/model/dice";
+import { DieValue } from "../../../models/src/model/dice";
+import { LowerSectionKey } from "../../../models/src/model/yahtzee.score";
 import type { IndexedYahtzee, IndexedYahtzeeSpecs } from "./game";
-import type { LowerSectionKey } from "models/src/model/yahtzee.score";
 
 const headers = {
   Accept: "application/json",
   "Content-Type": "application/json",
 };
 
-async function post(url: string, body: {} = {}): Promise<any> {
+async function post(url: string, body: object = {}): Promise<any> {
   const response: Response = await fetch(url, {
     method: "POST",
     headers,

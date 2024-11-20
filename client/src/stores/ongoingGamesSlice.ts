@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import { IndexedYahtzee } from "@/model/game";
+import { deepClone } from "@/lib/utils";
 
 interface OngoingGamesState {
   gameList: IndexedYahtzee[];
@@ -14,29 +15,24 @@ const ongoingGamesSlice = createSlice({
   name: "ongoingGames",
   initialState,
   reducers: {
-    updateOnGoingGame: (state, action: PayloadAction<IndexedYahtzee>) => {
-      const index = state.gameList.findIndex(
-        (game) => game.id === action.payload.id
-      );
-      if (index > -1) {
-        state.gameList[index] = {...action.payload}
-      }
-    },
-
     upsertOnGoingGame: (state, action: PayloadAction<IndexedYahtzee>) => {
       if (state.gameList.some((g) => g.id === action.payload.id)) {
-        updateOnGoingGame({...action.payload});
+        const index = state.gameList.findIndex(
+          (game) => game.id === action.payload.id
+        );
+        console.log(index);
+        if (index > -1) {
+          state.gameList[index] = deepClone(action.payload);
+          console.log(state.gameList[index]);
+        }
       } else {
-        state.gameList.push({...action.payload});
+        state.gameList.push(deepClone(action.payload));
       }
     },
   },
 });
 
-export const {
-  updateOnGoingGame,
-  upsertOnGoingGame,
-} = ongoingGamesSlice.actions;
+export const { upsertOnGoingGame } = ongoingGamesSlice.actions;
 
 export default ongoingGamesSlice.reducer;
 

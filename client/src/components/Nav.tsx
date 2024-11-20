@@ -8,7 +8,7 @@ import { useCallback, useEffect } from "react";
 import { RootState } from "@/stores/store";
 import { useDispatch, useSelector } from "react-redux";
 import * as api from "../model/api";
-import { is_finished } from "models/src/model/yahtzee.game";
+import { is_finished } from "../../../models/src/model/yahtzee.game";
 
 function Nav({ children }: { children: React.ReactNode }) {
   const selectPlayer = (state: RootState) => state.player.player;

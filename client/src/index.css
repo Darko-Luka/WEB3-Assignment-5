@@ -64,3 +64,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+.activeplayer {
+  font-weight: bold;
+}
+
+.table-class td {
+  @apply border border-slate-600 p-1;
+}
