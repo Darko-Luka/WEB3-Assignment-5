@@ -9,6 +9,7 @@ import { RootState } from "@/stores/store";
 import { useDispatch, useSelector } from "react-redux";
 import * as api from "../model/api";
 import { is_finished } from "../../../models/src/model/yahtzee.game";
+import { createWebSocketObservable } from "@/lib/utils";
 
 function Nav({ children }: { children: React.ReactNode }) {
   const selectPlayer = (state: RootState) => state.player.player;
@@ -45,18 +46,21 @@ function Nav({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:9090/publish");
-    ws.onopen = () => ws.send(JSON.stringify({ type: "subscribe" }));
+    const wsObservable = createWebSocketObservable(
+      "ws://localhost:9090/publish"
+    );
 
-    ws.onmessage = ({ data: gameJSON }) => {
-      const game = JSON.parse(gameJSON);
-      if (game.pending) {
-        dispatch(upsertPendingGame(game));
-      } else {
-        dispatch(upsertOnGoingGame(game));
-        dispatch(removePendingGame(game.id));
-      }
-    };
+    const wsSubscription = wsObservable.subscribe({
+      next: (message: any) => {
+        const game = JSON.parse(message.data);
+        if (game.pending) {
+          dispatch(upsertPendingGame(game));
+        } else {
+          dispatch(upsertOnGoingGame(game));
+          dispatch(removePendingGame(game.id));
+        }
+      },
+    });
 
     const fetchData = async () => {
       const games = await api.games();
@@ -69,9 +73,8 @@ function Nav({ children }: { children: React.ReactNode }) {
     fetchData();
 
     return () => {
-      if (ws.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify({ type: "unsubscribe" }));
-        ws.close();
+      if (wsSubscription) {
+        wsSubscription.unsubscribe();
       }
     };
   }, []);
